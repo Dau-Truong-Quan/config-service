@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    active: git
+
+  # --- Config Server backend: Git (GitHub) ---
+  # IMPORTANT: Set these environment variables before running the config server.
+  # On Windows PowerShell:
+  #   $env:SPRING_CLOUD_CONFIG_SERVER_GIT_URI = "https://github.com/Dau-Truong-Quan/microservice-config"
+  #   $env:SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME = "your-github-username"
+  #   $env:SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD = "your-github-PAT-token"
+  #
+  # On Linux/Mac bash:
+  #   export SPRING_CLOUD_CONFIG_SERVER_GIT_URI="https://github.com/Dau-Truong-Quan/microservice-config"
+  #   export SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME="your-github-username"
+  #   export SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD="your-github-PAT-token"
+  #
+  # NEVER commit real tokens to version control. Use environment variables only.
+
+  cloud:
+    config:
+      server:
+        git:
+          # GitHub repository URI — loaded from environment variable
+          uri: ${SPRING_CLOUD_CONFIG_SERVER_GIT_URI:https://github.com/Dau-Truong-Quan/microservice-config}
+          # GitHub credentials — loaded from environment variables (NO fallback values for security!)
+          username: ${SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME}
+          password: ${SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD}
+          # Branch to read from (default: main)
+          default-label: ${SPRING_CLOUD_CONFIG_SERVER_GIT_BRANCH:main}
+          # Clone on startup so startup failures are fast and obvious
+          clone-on-start: true
+          # How long (seconds) to cache config before re-fetching from GitHub
+          refresh-rate: 30
+          # Search path within the repo where *.properties / *.yml files live
+          # Use {application} to support per-service sub-directories, e.g. services/account-service/
+          search-paths: ''
+
+server:
+  port: 8888
+
+# --- Actuator ---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,refresh,busrefresh
+  endpoint:
+    health:
+      show-details: always

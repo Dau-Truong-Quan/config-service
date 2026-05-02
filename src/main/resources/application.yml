@@ -4,21 +4,6 @@ spring:
 
   profiles:
     active: git
-
-  # --- Config Server backend: Git (GitHub) ---
-  # IMPORTANT: Set these environment variables before running the config server.
-  # On Windows PowerShell:
-  #   $env:SPRING_CLOUD_CONFIG_SERVER_GIT_URI = "https://github.com/Dau-Truong-Quan/microservice-config"
-  #   $env:SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME = "your-github-username"
-  #   $env:SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD = "your-github-PAT-token"
-  #
-  # On Linux/Mac bash:
-  #   export SPRING_CLOUD_CONFIG_SERVER_GIT_URI="https://github.com/Dau-Truong-Quan/microservice-config"
-  #   export SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME="your-github-username"
-  #   export SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD="your-github-PAT-token"
-  #
-  # NEVER commit real tokens to version control. Use environment variables only.
-
   cloud:
     config:
       server:
